@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Árbol</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(#bfe6ff 0%, #e8f7ff 70%, #cfeac0 70%, #9ccc7a 100%);
+      overflow: hidden;
+    }
+    .arbol {
+      width: min(80vw, 480px);
+      height: auto;
+      transform-origin: 50% 100%;
+      animation: mecer 6s ease-in-out infinite;
+    }
+    @keyframes mecer {
+      0%, 100% { transform: rotate(-1deg); }
+      50%      { transform: rotate(1deg); }
+    }
+  </style>
+</head>
+<body>
+  <svg class="arbol" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" aria-label="Árbol">
+    <!-- Sombra -->
+    <ellipse cx="200" cy="480" rx="120" ry="14" fill="rgba(0,0,0,0.15)"/>
+
+    <!-- Tronco -->
+    <path d="M180 480 C185 420 185 360 175 300 L225 300 C215 360 215 420 220 480 Z" fill="#7a4a2a"/>
+    <!-- Ramas -->
+    <path d="M190 330 C160 300 140 290 115 270" stroke="#7a4a2a" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <path d="M210 320 C240 290 260 280 290 265" stroke="#7a4a2a" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <path d="M200 300 L200 230" stroke="#7a4a2a" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <!-- Textura del tronco -->
+    <path d="M195 470 C197 430 196 390 192 350" stroke="#5e3820" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M207 460 C208 420 209 390 206 360" stroke="#5e3820" stroke-width="3" fill="none" opacity="0.6"/>
+
+    <!-- Copa -->
+    <g>
+      <circle cx="200" cy="170" r="95"  fill="#2f7d32"/>
+      <circle cx="120" cy="230" r="70"  fill="#2f7d32"/>
+      <circle cx="280" cy="230" r="70"  fill="#2f7d32"/>
+      <circle cx="140" cy="140" r="65"  fill="#388e3c"/>
+      <circle cx="260" cy="140" r="65"  fill="#388e3c"/>
+      <circle cx="200" cy="100" r="70"  fill="#43a047"/>
+      <circle cx="200" cy="240" r="70"  fill="#388e3c"/>
+      <!-- Brillos -->
+      <circle cx="175" cy="85"  r="30" fill="#66bb6a" opacity="0.7"/>
+      <circle cx="120" cy="125" r="22" fill="#66bb6a" opacity="0.6"/>
+      <circle cx="245" cy="120" r="20" fill="#66bb6a" opacity="0.6"/>
+    </g>
+
+    <!-- Frutos -->
+    <g fill="#e53935">
+      <circle cx="150" cy="200" r="9"/>
+      <circle cx="245" cy="185" r="9"/>
+      <circle cx="200" cy="140" r="9"/>
+      <circle cx="105" cy="250" r="9"/>
+      <circle cx="295" cy="245" r="9"/>
+      <circle cx="210" cy="260" r="9"/>
+    </g>
+  </svg>
+</body>
+</html>
