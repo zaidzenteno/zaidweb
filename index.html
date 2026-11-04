@@ -3,105 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Árbol</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: system-ui, sans-serif; }
-    .illimani {
-      position: relative;
-      height: 100vh;
-      background: url("https://upload.wikimedia.org/wikipedia/commons/b/bc/Illimani_from_the_outskirts_La_Paz.jpg") center / cover no-repeat;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .illimani h1 {
-      margin-bottom: 12vh;
-      color: #fff;
-      font-size: clamp(2.5rem, 8vw, 6rem);
-      letter-spacing: 0.1em;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
-    }
-    .illimani small {
-      position: absolute;
-      right: 12px;
-      bottom: 8px;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.85);
-      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-    }
-    .illimani small a { color: inherit; }
-    .escena {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(#bfe6ff 0%, #e8f7ff 70%, #cfeac0 70%, #9ccc7a 100%);
-      overflow: hidden;
-    }
-    .arbol {
-      width: min(80vw, 480px);
-      height: auto;
-      transform-origin: 50% 100%;
-      animation: mecer 6s ease-in-out infinite;
-    }
-    @keyframes mecer {
-      0%, 100% { transform: rotate(-1deg); }
-      50%      { transform: rotate(1deg); }
-    }
-  </style>
+  <title>Estilo Cruceño · Peluquería y barbería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
-<body>
-  <header class="illimani">
-    <h1>BOLIVIA</h1>
-    <small>Foto: juhauski72 · <a href="https://commons.wikimedia.org/wiki/File:Illimani_from_the_outskirts_La_Paz.jpg" target="_blank" rel="noopener">CC BY 2.0</a></small>
-  </header>
+<body style="font-family: sans-serif; margin: 0; color: #222;">
 
-  <main class="escena">
-  <svg class="arbol" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" aria-label="Árbol">
-    <!-- Sombra -->
-    <ellipse cx="200" cy="480" rx="120" ry="14" fill="rgba(0,0,0,0.15)"/>
+<!-- ===== ENCABEZADO ===== -->
+<div style="background: #111; color: white; text-align: center; padding: 50px 20px;">
+  <p style="font-size: 56px; margin: 0;">💈</p>
+  <h1 style="font-family: 'Bebas Neue', sans-serif; font-weight: normal; font-size: 64px; margin: 8px 0 0; letter-spacing: 4px;">ESTILO CRUCEÑO</h1>
+  <p style="font-size: 18px; margin: 8px 0 22px; color: #d4af37;">Peluquería y barbería</p>
+  <a href="https://wa.me/59170000000" style="background: #d32f2f; color: white; padding: 14px 28px; border-radius: 30px; text-decoration: none; font-size: 18px;">📅 Reservar turno</a>
+</div>
 
-    <!-- Tronco -->
-    <path d="M180 480 C185 420 185 360 175 300 L225 300 C215 360 215 420 220 480 Z" fill="#7a4a2a"/>
-    <!-- Ramas -->
-    <path d="M190 330 C160 300 140 290 115 270" stroke="#7a4a2a" stroke-width="12" fill="none" stroke-linecap="round"/>
-    <path d="M210 320 C240 290 260 280 290 265" stroke="#7a4a2a" stroke-width="12" fill="none" stroke-linecap="round"/>
-    <path d="M200 300 L200 230" stroke="#7a4a2a" stroke-width="14" fill="none" stroke-linecap="round"/>
-    <!-- Textura del tronco -->
-    <path d="M195 470 C197 430 196 390 192 350" stroke="#5e3820" stroke-width="3" fill="none" opacity="0.6"/>
-    <path d="M207 460 C208 420 209 390 206 360" stroke="#5e3820" stroke-width="3" fill="none" opacity="0.6"/>
+<!-- ===== SERVICIOS ===== -->
+<div style="padding: 32px 20px; max-width: 760px; margin: auto;">
+  <h2 style="text-align: center; font-size: 32px;">Servicios</h2>
 
-    <!-- Copa -->
-    <g>
-      <circle cx="200" cy="170" r="95"  fill="#e65100"/>
-      <circle cx="120" cy="230" r="70"  fill="#e65100"/>
-      <circle cx="280" cy="230" r="70"  fill="#e65100"/>
-      <circle cx="140" cy="140" r="65"  fill="#f57c00"/>
-      <circle cx="260" cy="140" r="65"  fill="#f57c00"/>
-      <circle cx="200" cy="100" r="70"  fill="#fb8c00"/>
-      <circle cx="200" cy="240" r="70"  fill="#f57c00"/>
-      <!-- Brillos -->
-      <circle cx="175" cy="85"  r="30" fill="#ffb74d" opacity="0.7"/>
-      <circle cx="120" cy="125" r="22" fill="#ffb74d" opacity="0.6"/>
-      <circle cx="245" cy="120" r="20" fill="#ffb74d" opacity="0.6"/>
-    </g>
+  <div style="display: flex; gap: 14px; flex-wrap: wrap;">
 
-    <!-- Manzanas negras -->
-    <defs>
-      <g id="manzana">
-        <path d="M0 -6 C-4 -11 -13 -9 -13 0 C-13 8 -6 13 0 10 C6 13 13 8 13 0 C13 -9 4 -11 0 -6 Z" fill="#111"/>
-        <path d="M0 -6 C0 -10 1 -13 3 -15" stroke="#4e342e" stroke-width="2" fill="none" stroke-linecap="round"/>
-        <ellipse cx="-6" cy="-2" rx="2.5" ry="4" fill="#fff" opacity="0.35"/>
-      </g>
-    </defs>
-    <use href="#manzana" x="150" y="200"/>
-    <use href="#manzana" x="245" y="185"/>
-    <use href="#manzana" x="200" y="140"/>
-    <use href="#manzana" x="105" y="250"/>
-    <use href="#manzana" x="295" y="245"/>
-    <use href="#manzana" x="210" y="260"/>
-  </svg>
-  </main>
+    <div style="flex: 1; min-width: 200px; background: #f5f5f5; padding: 18px; border-radius: 14px; border-left: 5px solid #d4af37;">
+      <h3 style="margin: 0;">✂️ Corte clásico</h3>
+      <p>Corte a tijera o máquina, como tú quieras.</p>
+      <p style="font-size: 22px; margin: 0;"><b>Bs. 30</b></p>
+    </div>
+
+    <div style="flex: 1; min-width: 200px; background: #f5f5f5; padding: 18px; border-radius: 14px; border-left: 5px solid #d4af37;">
+      <h3 style="margin: 0;">🧔 Barba</h3>
+      <p>Perfilado y arreglo con toalla caliente.</p>
+      <p style="font-size: 22px; margin: 0;"><b>Bs. 20</b></p>
+    </div>
+
+    <div style="flex: 1; min-width: 200px; background: #f5f5f5; padding: 18px; border-radius: 14px; border-left: 5px solid #d4af37;">
+      <h3 style="margin: 0;">🔥 Corte + barba</h3>
+      <p>El combo completo para salir como nuevo.</p>
+      <p style="font-size: 22px; margin: 0;"><b>Bs. 45</b></p>
+    </div>
+
+    <!-- ✏️✏️✏️ TU PARTE: EMPIEZA AQUÍ ✏️✏️✏️ -->
+    <!-- Agrega un servicio nuevo: por ejemplo "Corte de niño", "Tinte" o "Diseños con navaja".
+         Pista: copia una de las tarjetas de arriba (desde <div ...> hasta </div>)
+         y pégala aquí. Luego cambia el emoji, el nombre, la descripción y el precio. -->
+
+
+
+    <!-- ✏️✏️✏️ TU PARTE: TERMINA AQUÍ ✏️✏️✏️ -->
+
+  </div>
+</div>
+
+<!-- ===== POR QUÉ ELEGIRNOS ===== -->
+<div style="background: #111; color: white; padding: 32px 20px;">
+  <div style="max-width: 760px; margin: auto; text-align: center;">
+    <h2 style="color: #d4af37;">¿Por qué elegirnos?</h2>
+    <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+      <p style="flex: 1; min-width: 160px;">⭐ Barberos con experiencia</p>
+      <p style="flex: 1; min-width: 160px;">❄️ Local con aire acondicionado</p>
+      <p style="flex: 1; min-width: 160px;">☕ Cafecito mientras esperas</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== HORARIOS Y UBICACIÓN ===== -->
+<div style="padding: 32px 20px;">
+  <div style="max-width: 760px; margin: auto; display: flex; gap: 20px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 220px;">
+      <h2>🕗 Horarios</h2>
+      <p>Lunes a sábado: 9:00 a 20:00</p>
+      <p>Domingo: cerrado</p>
+    </div>
+    <div style="flex: 1; min-width: 220px;">
+      <h2>📍 Dónde estamos</h2>
+      <p>Calle Ejemplo, cerca del Equipetrol</p>
+      <p>Santa Cruz de la Sierra, Bolivia</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PIE DE PÁGINA ===== -->
+<div style="background: #d4af37; color: #111; text-align: center; padding: 20px;">
+  <p style="margin: 0;">Estilo Cruceño · Santa Cruz 💚🤍</p>
+</div>
+
 </body>
 </html>
