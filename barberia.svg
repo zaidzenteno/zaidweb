@@ -1,34 +1,123 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 160" width="520" height="160" role="img" aria-label="Barbería">
-  <!-- Fondo -->
-  <rect width="520" height="160" rx="20" fill="#111"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-300 0 1120 160" width="100%" height="100%" preserveAspectRatio="xMidYMin meet" role="img" aria-label="Barbería">
+  <!-- Fondo blanco, igual al fondo de la foto, para que no se note dónde termina -->
+  <rect x="-5000" width="10520" height="160" fill="#fafafa"/>
 
-  <!-- Texto BARBERÍA -->
-  <text x="30" y="100" font-family="Impact, 'Bebas Neue', sans-serif" font-size="64" letter-spacing="4" fill="#ffffff">BARBERÍA</text>
-  <rect x="32" y="114" width="290" height="4" fill="#d4af37"/>
+  <!-- Foto de las máquinas de cortar -->
+  <!-- foto achicada a 496 x 275, centrada; la franja de 160 de alto corta la tabla de abajo -->
+  <clipPath id="franja"><rect x="-300" y="0" width="1120" height="160"/></clipPath>
+  <image href="barbero.jpg" x="12" y="-7" width="496" height="275" opacity="0.5" clip-path="url(#franja)"/>
 
-  <!-- Logo: poste de barbero -->
-  <g transform="translate(420 18)">
-    <!-- tapa de arriba -->
-    <rect x="-22" y="0" width="44" height="12" rx="4" fill="#d4af37"/>
-    <!-- tubo con rayas -->
-    <clipPath id="tubo"><rect x="-16" y="12" width="32" height="100" rx="6"/></clipPath>
-    <rect x="-16" y="12" width="32" height="100" rx="6" fill="#ffffff"/>
-    <g clip-path="url(#tubo)">
-      <path d="M-40 20 L40 -10 L40 4 L-40 34 Z" fill="#d32f2f"/>
-      <path d="M-40 50 L40 20 L40 34 L-40 64 Z" fill="#1565c0"/>
-      <path d="M-40 80 L40 50 L40 64 L-40 94 Z" fill="#d32f2f"/>
-      <path d="M-40 110 L40 80 L40 94 L-40 124 Z" fill="#1565c0"/>
-      <path d="M-40 140 L40 110 L40 124 L-40 154 Z" fill="#d32f2f"/>
+  <!-- Sombra oscura a la izquierda (donde va el texto), que se aclara hacia la derecha -->
+  <linearGradient id="sombra" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#000" stop-opacity="0.85"/>
+    <stop offset="0.6" stop-color="#000" stop-opacity="0.75"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0.6"/>
+  </linearGradient>
+  <rect x="-300" width="1120" height="160" fill="url(#sombra)"/>
+
+  <!-- Texto y poste, al centro -->
+  <g transform="translate(0 8)">
+    <!-- Estilo deportivo: letra gruesa e inclinada hacia adelante -->
+    <text x="50" y="102" transform="skewX(-14)" font-family="Impact, 'Arial Black', sans-serif" font-size="70" font-weight="900" letter-spacing="2" fill="#ffffff">BARBERÍA</text>
+
+    <!-- Precios de los cortes, debajo del letrero -->
+    <text x="58" y="138" transform="skewX(-14)" font-family="Impact, 'Arial Black', sans-serif" font-size="24" letter-spacing="2" fill="#ffffff">CORTES <tspan fill="#d4af37">20 · 30 · 40 Bs</tspan></text>
+
+    <!-- Logo: poste de barbero -->
+    <g transform="translate(380 18) skewX(-14)">
+      <!-- tapa de arriba -->
+      <rect x="-22" y="0" width="44" height="12" rx="4" fill="#d4af37"/>
+      <!-- tubo con rayas -->
+      <clipPath id="tubo"><rect x="-16" y="12" width="32" height="100" rx="6"/></clipPath>
+      <rect x="-16" y="12" width="32" height="100" rx="6" fill="#ffffff"/>
+      <g clip-path="url(#tubo)">
+        <path d="M-40 20 L40 -10 L40 4 L-40 34 Z" fill="#d32f2f"/>
+        <path d="M-40 50 L40 20 L40 34 L-40 64 Z" fill="#1565c0"/>
+        <path d="M-40 80 L40 50 L40 64 L-40 94 Z" fill="#d32f2f"/>
+        <path d="M-40 110 L40 80 L40 94 L-40 124 Z" fill="#1565c0"/>
+        <path d="M-40 140 L40 110 L40 124 L-40 154 Z" fill="#d32f2f"/>
+      </g>
+      <!-- base -->
+      <rect x="-22" y="112" width="44" height="12" rx="4" fill="#d4af37"/>
     </g>
-    <!-- base -->
-    <rect x="-22" y="112" width="44" height="12" rx="4" fill="#d4af37"/>
   </g>
 
-  <!-- Tijeras pequeñas -->
-  <g transform="translate(345 80)" stroke="#d4af37" stroke-width="4" fill="none" stroke-linecap="round">
-    <circle cx="-10" cy="16" r="7"/>
-    <circle cx="10" cy="16" r="7"/>
-    <line x1="-5" y1="11" x2="12" y2="-18"/>
-    <line x1="5" y1="11" x2="-12" y2="-18"/>
-  </g>
+  <!-- ===== EFECTO DE PELITOS CORTADOS ===== -->
+  <!-- Estilo de cada pelito: una línea curva, delgada y con puntas redondas -->
+  <style>
+    .pelo {
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      /* brillito alrededor para que los pelos negros se vean sobre el fondo oscuro */
+      filter: drop-shadow(0 0 0.8px rgba(255, 255, 255, 0.7));
+      pointer-events: none;
+    }
+  </style>
+
+  <!-- Aquí se van agregando los pelitos -->
+  <g id="pelos" clip-path="url(#franja)"></g>
+
+  <script><![CDATA[
+    const svg = document.documentElement;
+    const capa = document.getElementById('pelos');
+    // Negros, blancos y cafés (cada color tiene la misma probabilidad de salir)
+    const colores = ['#000000', '#1a1a1a', '#ffffff', '#f2f2f2', '#6d4c41', '#8d5a3c', '#a0703f'];
+    let ultimoPelo = 0;
+
+    // Número al azar entre min y max
+    function azar(min, max) {
+      return min + Math.random() * (max - min);
+    }
+
+    // Convierte la posición del mouse (en la pantalla) a coordenadas del dibujo
+    function posicion(evento) {
+      const p = svg.createSVGPoint();
+      p.x = evento.clientX;
+      p.y = evento.clientY;
+      return p.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
+    // Crea un pelito que sale volando, gira y cae
+    function crearPelo(x, y, fuerza) {
+      const largo = azar(6, 14);
+      const curva = azar(-5, 5);
+      const pelo = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      pelo.setAttribute('d', `M0 0 q ${largo / 2} ${curva} ${largo} 0`);
+      pelo.setAttribute('class', 'pelo');
+      pelo.setAttribute('stroke', colores[Math.floor(Math.random() * colores.length)]);
+      capa.appendChild(pelo);
+
+      const giroInicial = azar(0, 360);
+      const giroFinal = giroInicial + azar(-400, 400);
+      const haciaLado = azar(-fuerza, fuerza);   // se va a la izquierda o derecha
+      const caida = azar(40, 90) + fuerza;        // cae hacia abajo
+
+      const animacion = pelo.animate(
+        [
+          { transform: `translate(${x}px, ${y}px) rotate(${giroInicial}deg)`, opacity: 1 },
+          { transform: `translate(${x + haciaLado}px, ${y + caida}px) rotate(${giroFinal}deg)`, opacity: 0 }
+        ],
+        { duration: azar(700, 1300), easing: 'cubic-bezier(.3,.1,.7,1)' }
+      );
+      animacion.onfinish = () => pelo.remove(); // se borra al terminar
+    }
+
+    // Al MOVER el mouse: caen 2 pelitos (como máximo cada 40 milisegundos)
+    svg.addEventListener('mousemove', (evento) => {
+      const ahora = performance.now();
+      if (ahora - ultimoPelo < 40) return;
+      ultimoPelo = ahora;
+      const p = posicion(evento);
+      if (p.y < 0 || p.y > 160) return; // solo dentro del letrero
+      for (let i = 0; i < 2; i++) crearPelo(p.x, p.y, 25);
+    });
+
+    // Al hacer CLIC: ¡tijeretazo! salen 25 pelitos volando para todos lados
+    svg.addEventListener('click', (evento) => {
+      const p = posicion(evento);
+      if (p.y < 0 || p.y > 160) return;
+      for (let i = 0; i < 25; i++) crearPelo(p.x, p.y, 80);
+    });
+  ]]></script>
 </svg>

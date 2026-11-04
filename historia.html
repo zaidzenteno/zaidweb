@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Un día en Estilo Cruceño</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* Solo dos colores: blanco y negro. El único color lo pone el poste 3D. */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: #ece8e1; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    body { cursor: none; }
+    a { color: inherit; text-decoration: none; }
+
+    #escena { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; }
+
+    /* "difference": el texto blanco se ve NEGRO sobre fondo claro y BLANCO sobre fondo oscuro */
+    .invertir { mix-blend-mode: difference; }
+
+    /* ===== CARGA ===== */
+    #carga {
+      position: fixed; inset: 0; z-index: 50; background: #000; color: #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      font-family: 'Bebas Neue', sans-serif; transition: clip-path 1.2s cubic-bezier(.8,0,.2,1);
+      clip-path: inset(0 0 0 0);
+    }
+    #carga .numero { font-size: 18vw; line-height: .8; }
+    #carga .chico { font-family: 'Inter', sans-serif; }
+    #carga.fuera { clip-path: inset(0 0 100% 0); }
+
+    /* ===== CURSOR ===== */
+    #cursor {
+      position: fixed; top: 0; left: 0; width: 14px; height: 14px; border-radius: 50%;
+      background: #fff; pointer-events: none; z-index: 40; mix-blend-mode: difference;
+      transition: width .35s, height .35s;
+    }
+    #cursor.grande { width: 80px; height: 80px; }
+
+    /* ===== COSAS FIJAS (menú, reloj, barra) ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 30; padding: 24px 5vw;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    }
+    nav b { font-family: 'Bebas Neue', sans-serif; font-weight: normal; font-size: 26px; letter-spacing: 3px; }
+
+    #reloj {
+      position: fixed; z-index: 30; left: 5vw; bottom: 5vh;
+      font-family: 'Bebas Neue', sans-serif; line-height: .8;
+    }
+    #hora { font-size: clamp(60px, 9vw, 140px); font-variant-numeric: tabular-nums; }
+    #momento { font-family: 'Inter', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; margin-top: 12px; }
+
+    #barra { position: fixed; z-index: 30; right: 5vw; bottom: 5vh; width: 160px; height: 1px; background: rgba(255,255,255,.3); }
+    #barra div { height: 100%; width: 0; background: #fff; }
+    #barra span { position: absolute; right: 0; top: -22px; font-size: 11px; letter-spacing: 3px; }
+
+    /* ===== CAPÍTULOS ===== */
+    main { position: relative; z-index: 10; }
+    section { height: 140vh; padding: 0 5vw; display: flex; flex-direction: column; justify-content: center; }
+    .der { align-items: flex-end; text-align: right; }
+
+    .capitulo { font-size: 12px; letter-spacing: 5px; text-transform: uppercase; margin: 0 0 2vh; }
+    h1, h2 {
+      font-family: 'Bebas Neue', sans-serif; font-weight: normal; margin: 0;
+      font-size: clamp(70px, 14vw, 230px); line-height: .82;
+    }
+    .texto { max-width: 340px; font-size: 15px; line-height: 1.7; font-weight: 300; margin-top: 3vh; }
+
+    /* Las letras suben una por una */
+    .letras { display: block; overflow: hidden; padding-top: .14em; margin-top: -.14em; }
+    .letras i { display: inline-block; font-style: normal; transform: translateY(110%); transition: transform 1s cubic-bezier(.2,.8,.2,1); }
+    .visible .letras i { transform: none; }
+    .aparece { opacity: 0; transform: translateY(24px); transition: opacity 1s .4s, transform 1s .4s; }
+    .visible .aparece { opacity: 1; transform: none; }
+
+    .precios { margin-top: 4vh; width: min(100%, 520px); }
+    .precio { display: flex; justify-content: space-between; padding: 16px 0; border-top: 1px solid rgba(255,255,255,.35); font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 1px; transition: padding .4s; }
+    .precio:last-child { border-bottom: 1px solid rgba(255,255,255,.35); }
+    .precio:hover { padding-left: 16px; }
+
+    .boton {
+      display: inline-block; margin-top: 5vh; padding: 20px 50px; border: 1px solid #fff; border-radius: 60px;
+      font-size: 13px; letter-spacing: 5px; text-transform: uppercase; transition: background .4s, color .4s;
+    }
+    .boton:hover { background: #fff; color: #000; }
+
+    @media (max-width: 768px), (hover: none) {
+      body { cursor: auto; }
+      #cursor { display: none; }
+      .der { align-items: flex-start; text-align: left; }
+      #barra { width: 90px; }
+      /* reloj chiquito arriba, para que no tape los textos */
+      #reloj { bottom: auto; top: 70px; }
+      #hora { font-size: 40px; }
+      #momento { margin-top: 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="carga">
+  <div class="numero" id="contador">00:00</div>
+  <div class="chico" style="font-size: 12px; letter-spacing: 5px;">UN DÍA EN ESTILO CRUCEÑO</div>
+</div>
+
+<div id="cursor"></div>
+<canvas id="escena"></canvas>
+
+<!-- Todo lo que tiene la clase "invertir" cambia de color solo según el fondo -->
+<nav class="invertir">
+  <b>ESTILO CRUCEÑO</b>
+  <a href="#reserva">Reservar</a>
+</nav>
+
+<div id="reloj" class="invertir">
+  <div id="hora">09:00</div>
+  <div id="momento">Mañana</div>
+</div>
+
+<div id="barra" class="invertir"><span id="porcentaje">01 / 04</span><div id="relleno"></div></div>
+
+<main class="invertir">
+  <!-- 01 · MAÑANA -->
+  <section class="revelar">
+    <p class="capitulo aparece">01 — Mañana</p>
+    <h1><span class="letras">ABRIMOS</span><span class="letras">LAS PUERTAS</span></h1>
+    <p class="texto aparece">Café recién hecho, música suave y la primera luz de Santa Cruz entrando por la ventana. El poste ya está girando.</p>
+  </section>
+
+  <!-- 02 · TARDE -->
+  <section class="revelar der">
+    <p class="capitulo aparece">02 — Tarde</p>
+    <h2><span class="letras">TIJERA</span><span class="letras">Y NAVAJA</span></h2>
+    <div class="precios aparece">
+      <div class="precio"><span>Corte simple</span><span>20 Bs</span></div>
+      <div class="precio"><span>Corte con diseño</span><span>30 Bs</span></div>
+      <div class="precio"><span>Corte + barba</span><span>40 Bs</span></div>
+    </div>
+  </section>
+
+  <!-- 03 · NOCHE -->
+  <section class="revelar">
+    <p class="capitulo aparece">03 — Noche</p>
+    <h2><span class="letras">LISTO PARA</span><span class="letras">SALIR</span></h2>
+    <p class="texto aparece">Las luces rojas y azules se prenden. Sales con el corte fresco, directo al Equipetrol.</p>
+  </section>
+
+  <!-- 04 · RESERVA -->
+  <section id="reserva" class="revelar" style="align-items: center; text-align: center;">
+    <p class="capitulo aparece">04 — Tu turno</p>
+    <h2><span class="letras">TU DÍA</span><span class="letras">EMPIEZA AQUÍ</span></h2>
+    <a class="boton aparece" href="https://wa.me/59170000000">Reservar turno</a>
+  </section>
+</main>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+  import * as THREE from 'three';
+  import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+  // ============================================================
+  // 1. LA HISTORIA: cómo se ve la escena en cada momento del día.
+  //    Al bajar la página, pasamos suavemente de un momento al otro.
+  // ============================================================
+  const MOMENTOS = [
+    { nombre: 'Mañana', hora: 9,  fondo: '#ece8e1', camara: [-1.6, 0.6, 9],  mirar: [-1.9, 0.1, 0], sol: 2.6, colorSol: '#ffd6a0', ambiente: 0.9, neon: 0  },
+    { nombre: 'Tarde',  hora: 15, fondo: '#a7a49f', camara: [1.8, 0.9, 4.2], mirar: [1.5, 0.4, 0],  sol: 2.0, colorSol: '#ffffff', ambiente: 0.5, neon: 0  },
+    { nombre: 'Noche',  hora: 21, fondo: '#060606', camara: [-1.4, -2.0, 6], mirar: [-1.6, 0.6, 0], sol: 0.0, colorSol: '#6f86ff', ambiente: 0.05, neon: 45 },
+    { nombre: 'Noche',  hora: 23, fondo: '#000000', camara: [0, 2.6, 10],    mirar: [0, 3.2, 0],    sol: 1.2, colorSol: '#ffffff', ambiente: 0.15, neon: 25 }
+  ];
+
+  // ============================================================
+  // 2. RENDERER, ESCENA Y CÁMARA
+  // ============================================================
+  const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('escena'), antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+  const escena = new THREE.Scene();
+  escena.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+  escena.fog = new THREE.Fog('#ece8e1', 10, 28);
+
+  const camara = new THREE.PerspectiveCamera(35, innerWidth / innerHeight, 0.1, 100);
+  const mirarA = new THREE.Vector3();
+
+  // Luces: ambiente + "sol" + dos neones (rojo y azul) para la noche
+  const ambiente = new THREE.AmbientLight('#ffffff', 1);
+  const sol = new THREE.DirectionalLight('#ffffff', 2);
+  sol.position.set(4, 5, 4);
+  const neonRojo = new THREE.PointLight('#ff2a2a', 0, 12);
+  neonRojo.position.set(-2.2, 0.5, 1.5);
+  const neonAzul = new THREE.PointLight('#2a5bff', 0, 12);
+  neonAzul.position.set(2.2, -0.5, 1.5);
+  escena.add(ambiente, sol, neonRojo, neonAzul);
+
+  // ============================================================
+  // 3. EL POSTE (rayas pintadas con código + cromo)
+  // ============================================================
+  function crearRayas() {
+    const lado = 256, lienzo = document.createElement('canvas');
+    lienzo.width = lienzo.height = lado;
+    const ctx = lienzo.getContext('2d'), img = ctx.createImageData(lado, lado);
+    for (let y = 0; y < lado; y++) for (let x = 0; x < lado; x++) {
+      const v = (x + y) % 128;
+      let c = [245, 245, 245];
+      if (v < 40) c = [211, 40, 40];
+      else if (v >= 64 && v < 104) c = [25, 80, 200];
+      const i = (y * lado + x) * 4;
+      img.data.set([...c, 255], i);
+    }
+    ctx.putImageData(img, 0, 0);
+    const t = new THREE.CanvasTexture(lienzo);
+    t.wrapS = t.wrapT = THREE.RepeatWrapping;
+    t.repeat.set(2, 3);
+    t.colorSpace = THREE.SRGBColorSpace;
+    return t;
+  }
+  const rayas = crearRayas();
+
+  const poste = new THREE.Group();
+  escena.add(poste);
+  const cromo = new THREE.MeshStandardMaterial({ color: '#e8e8e8', metalness: 1, roughness: 0.12 });
+
+  poste.add(new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 3, 96), new THREE.MeshStandardMaterial({ map: rayas, roughness: 0.3, emissive: '#ffffff', emissiveMap: rayas, emissiveIntensity: 0 })));
+  poste.add(new THREE.Mesh(
+    new THREE.CylinderGeometry(0.58, 0.58, 3, 96, 1, true),
+    new THREE.MeshPhysicalMaterial({ color: '#ffffff', roughness: 0.04, transparent: true, opacity: 0.25, clearcoat: 1 })
+  ));
+  for (const lado of [1, -1]) {
+    const tapa = new THREE.Mesh(new THREE.CylinderGeometry(0.68, 0.68, 0.25, 96), cromo);
+    tapa.position.y = lado * 1.62;
+    const anillo = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.05, 16, 96), cromo);
+    anillo.rotation.x = Math.PI / 2;
+    anillo.position.y = lado * 1.48;
+    poste.add(tapa, anillo);
+  }
+  const bola = new THREE.Mesh(new THREE.SphereGeometry(0.32, 64, 64), cromo);
+  bola.position.y = 1.98;
+  poste.add(bola);
+  const tubo = poste.children[0]; // para prender sus rayas de noche
+
+  // Piso que refleja (se ve mejor de noche)
+  const piso = new THREE.Mesh(
+    new THREE.CircleGeometry(30, 64),
+    new THREE.MeshStandardMaterial({ color: '#111111', metalness: 0.6, roughness: 0.35, transparent: true, opacity: 0 })
+  );
+  piso.rotation.x = -Math.PI / 2;
+  piso.position.y = -2.15;
+  escena.add(piso);
+
+  // ============================================================
+  // 4. PELITOS (más en la tarde, que es cuando se corta)
+  // ============================================================
+  const CANTIDAD = 500;
+  const pelos = new THREE.InstancedMesh(new THREE.CylinderGeometry(0.005, 0.005, 0.14, 4), new THREE.MeshStandardMaterial({ roughness: 0.6 }), CANTIDAD);
+  escena.add(pelos);
+  const tonos = ['#111111', '#2b2b2b', '#5c3b2a', '#8d5a3c', '#f4f4f4'];
+  const datos = [];
+  for (let i = 0; i < CANTIDAD; i++) {
+    // Se juntan alrededor del poste
+    const ang = Math.random() * Math.PI * 2, radio = 0.8 + Math.random() * 4;
+    datos.push({ x: Math.cos(ang) * radio, y: (Math.random() - 0.5) * 8, z: Math.sin(ang) * radio,
+                 vel: 0.1 + Math.random() * 0.3, rx: Math.random() * 6, rz: Math.random() * 6, vr: (Math.random() - 0.5) * 2 });
+    pelos.setColorAt(i, new THREE.Color(tonos[i % tonos.length]));
+  }
+  const ayudante = new THREE.Object3D();
+
+  // ============================================================
+  // 5. HERRAMIENTAS PARA MEZCLAR
+  // ============================================================
+  const mezclar = (a, b, t) => a + (b - a) * t;
+  const suave = (t) => t * t * (3 - 2 * t);
+  const c1 = new THREE.Color(), c2 = new THREE.Color(), colorFondo = new THREE.Color(), colorSol = new THREE.Color();
+
+  // Devuelve "dónde estamos" entre dos momentos
+  function tramo(p) {
+    const total = MOMENTOS.length - 1;
+    const pos = Math.min(p * total, total - 0.0001);
+    const i = Math.floor(pos);
+    return { a: MOMENTOS[i], b: MOMENTOS[i + 1], t: suave(pos - i), i, crudo: pos };
+  }
+
+  // ============================================================
+  // 6. SCROLL Y MOUSE
+  // ============================================================
+  let scroll = 0, scrollSuave = 0;
+  const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+  function leerScroll() {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    scroll = max > 0 ? scrollY / max : 0;
+  }
+  addEventListener('scroll', leerScroll);
+  addEventListener('mousemove', (e) => {
+    mouse.x = (e.clientX / innerWidth) * 2 - 1;
+    mouse.y = (e.clientY / innerHeight) * 2 - 1;
+  });
+
+  const hora = document.getElementById('hora');
+  const momento = document.getElementById('momento');
+  const relleno = document.getElementById('relleno');
+  const porcentaje = document.getElementById('porcentaje');
+
+  // ============================================================
+  // 7. ANIMACIÓN (60 veces por segundo)
+  // ============================================================
+  const reloj = new THREE.Clock();
+  function animar() {
+    const dt = Math.min(reloj.getDelta(), 0.05);
+    const tiempo = reloj.elapsedTime;
+    scrollSuave = mezclar(scrollSuave, scroll, 0.06);
+    mouse.sx = mezclar(mouse.sx, mouse.x, 0.05);
+    mouse.sy = mezclar(mouse.sy, mouse.y, 0.05);
+
+    const { a, b, t, i, crudo } = tramo(scrollSuave);
+    const lejos = innerWidth < 768 ? 1.6 : 1; // en celular, la cámara más lejos
+
+    // Cámara: mezclamos posición y hacia dónde mira
+    camara.position.set(
+      mezclar(a.camara[0], b.camara[0], t) + mouse.sx * 0.3,
+      mezclar(a.camara[1], b.camara[1], t) - mouse.sy * 0.2,
+      mezclar(a.camara[2], b.camara[2], t) * lejos
+    );
+    // En celular no corremos el poste a los costados (k === 0 es la "x")
+    mirarA.set(...a.mirar.map((v, k) => mezclar(v, b.mirar[k], t) * (innerWidth < 768 && k === 0 ? 0 : 1)));
+    camara.lookAt(mirarA);
+
+    // Color del fondo (cielo) y de la niebla
+    colorFondo.copy(c1.set(a.fondo)).lerp(c2.set(b.fondo), t);
+    renderer.setClearColor(colorFondo);
+    escena.fog.color.copy(colorFondo);
+    document.body.style.background = '#' + colorFondo.getHexString();
+
+    // Luces según la hora
+    sol.intensity = mezclar(a.sol, b.sol, t);
+    sol.color.copy(colorSol.set(a.colorSol)).lerp(c2.set(b.colorSol), t);
+    ambiente.intensity = mezclar(a.ambiente, b.ambiente, t);
+    const neon = mezclar(a.neon, b.neon, t);
+    neonRojo.intensity = neon * (0.85 + Math.sin(tiempo * 9) * 0.15); // parpadeo leve
+    neonAzul.intensity = neon;
+    tubo.material.emissiveIntensity = neon / 90;  // de noche las rayas brillan
+    piso.material.opacity = Math.min(neon / 30, 1);
+
+    // El sol "se mueve" en el cielo durante el día
+    sol.position.set(Math.cos(crudo * 1.2) * 6, 3 + Math.sin(crudo) * 3, 4);
+
+    // Poste
+    rayas.offset.y -= dt * 0.35;
+    poste.rotation.y += dt * 0.35;
+    poste.position.y = Math.sin(tiempo * 1.1) * 0.06;
+
+    // Pelitos: en la tarde (capítulo 2) caen más rápido, como si estuvieran cortando
+    const ganas = 1 + Math.max(0, 1 - Math.abs(crudo - 1)) * 3;
+    for (let k = 0; k < CANTIDAD; k++) {
+      const d = datos[k];
+      d.y -= d.vel * dt * ganas;
+      if (d.y < -2.1) d.y = 4;
+      d.rx += d.vr * dt * ganas;
+      d.rz += d.vr * dt * 0.6;
+      ayudante.position.set(d.x, d.y, d.z);
+      ayudante.rotation.set(d.rx, 0, d.rz);
+      ayudante.updateMatrix();
+      pelos.setMatrixAt(k, ayudante.matrix);
+    }
+    pelos.instanceMatrix.needsUpdate = true;
+
+    // Reloj: la hora avanza con el scroll
+    const h = mezclar(a.hora, b.hora, crudo - i);
+    const hh = Math.floor(h), mm = Math.floor((h - hh) * 60);
+    hora.textContent = String(hh).padStart(2, '0') + ':' + String(mm).padStart(2, '0');
+    momento.textContent = (t < 0.5 ? a : b).nombre;
+    relleno.style.width = (scrollSuave * 100) + '%';
+    porcentaje.textContent = '0' + (Math.min(Math.round(crudo), 3) + 1) + ' / 04';
+
+    renderer.render(escena, camara);
+    requestAnimationFrame(animar);
+  }
+  animar();
+
+  addEventListener('resize', () => {
+    camara.aspect = innerWidth / innerHeight;
+    camara.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+    leerScroll();
+  });
+
+  // ============================================================
+  // 8. PÁGINA: carga, letras, cursor
+  // ============================================================
+
+  // Partimos cada título en letras sueltas para que suban una por una
+  document.querySelectorAll('.letras').forEach((linea) => {
+    const texto = linea.textContent;
+    linea.innerHTML = '';
+    [...texto].forEach((letra, n) => {
+      const i = document.createElement('i');
+      i.textContent = letra === ' ' ? ' ' : letra;
+      i.style.transitionDelay = (n * 0.03) + 's';
+      linea.appendChild(i);
+    });
+  });
+
+  // Carga: el reloj corre de 00:00 a 09:00 y se abre la cortina
+  const contador = document.getElementById('contador');
+  let minutos = 0;
+  const intervalo = setInterval(() => {
+    minutos = Math.min(minutos + 13, 540);
+    contador.textContent = String(Math.floor(minutos / 60)).padStart(2, '0') + ':' + String(minutos % 60).padStart(2, '0');
+    if (minutos >= 540) {
+      clearInterval(intervalo);
+      setTimeout(() => document.getElementById('carga').classList.add('fuera'), 250);
+      setTimeout(() => document.querySelector('.revelar').classList.add('visible'), 700);
+    }
+  }, 30);
+
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  let cx = 0, cy = 0, mx = 0, my = 0;
+  addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+  (function mover() {
+    cx = mezclar(cx, mx, 0.2); cy = mezclar(cy, my, 0.2);
+    cursor.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+    requestAnimationFrame(mover);
+  })();
+  document.querySelectorAll('a, .precio').forEach((el) => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('grande'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('grande'));
+  });
+
+  // Mostrar cada capítulo cuando llega a la pantalla
+  const obs = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  }), { threshold: 0.35 });
+  document.querySelectorAll('.revelar').forEach((s, i) => { if (i > 0) obs.observe(s); });
+</script>
+</body>
+</html>
