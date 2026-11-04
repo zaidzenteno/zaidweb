@@ -6,8 +6,33 @@
   <title>Árbol</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
+    body { font-family: system-ui, sans-serif; }
+    .illimani {
+      position: relative;
+      height: 100vh;
+      background: url("https://upload.wikimedia.org/wikipedia/commons/b/bc/Illimani_from_the_outskirts_La_Paz.jpg") center / cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .illimani h1 {
+      margin-bottom: 12vh;
+      color: #fff;
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      letter-spacing: 0.1em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+    .illimani small {
+      position: absolute;
+      right: 12px;
+      bottom: 8px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.85);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+    .illimani small a { color: inherit; }
+    .escena {
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -27,6 +52,12 @@
   </style>
 </head>
 <body>
+  <header class="illimani">
+    <h1>ILLIMANI</h1>
+    <small>Foto: juhauski72 · <a href="https://commons.wikimedia.org/wiki/File:Illimani_from_the_outskirts_La_Paz.jpg" target="_blank" rel="noopener">CC BY 2.0</a></small>
+  </header>
+
+  <main class="escena">
   <svg class="arbol" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" aria-label="Árbol">
     <!-- Sombra -->
     <ellipse cx="200" cy="480" rx="120" ry="14" fill="rgba(0,0,0,0.15)"/>
@@ -71,5 +102,6 @@
     <use href="#manzana" x="295" y="245"/>
     <use href="#manzana" x="210" y="260"/>
   </svg>
+  </main>
 </body>
 </html>
