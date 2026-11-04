@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 160" width="520" height="160" role="img" aria-label="Barbería">
+  <!-- Fondo -->
+  <rect width="520" height="160" rx="20" fill="#111"/>
+
+  <!-- Texto BARBERÍA -->
+  <text x="30" y="100" font-family="Impact, 'Bebas Neue', sans-serif" font-size="64" letter-spacing="4" fill="#ffffff">BARBERÍA</text>
+  <rect x="32" y="114" width="290" height="4" fill="#d4af37"/>
+
+  <!-- Logo: poste de barbero -->
+  <g transform="translate(420 18)">
+    <!-- tapa de arriba -->
+    <rect x="-22" y="0" width="44" height="12" rx="4" fill="#d4af37"/>
+    <!-- tubo con rayas -->
+    <clipPath id="tubo"><rect x="-16" y="12" width="32" height="100" rx="6"/></clipPath>
+    <rect x="-16" y="12" width="32" height="100" rx="6" fill="#ffffff"/>
+    <g clip-path="url(#tubo)">
+      <path d="M-40 20 L40 -10 L40 4 L-40 34 Z" fill="#d32f2f"/>
+      <path d="M-40 50 L40 20 L40 34 L-40 64 Z" fill="#1565c0"/>
+      <path d="M-40 80 L40 50 L40 64 L-40 94 Z" fill="#d32f2f"/>
+      <path d="M-40 110 L40 80 L40 94 L-40 124 Z" fill="#1565c0"/>
+      <path d="M-40 140 L40 110 L40 124 L-40 154 Z" fill="#d32f2f"/>
+    </g>
+    <!-- base -->
+    <rect x="-22" y="112" width="44" height="12" rx="4" fill="#d4af37"/>
+  </g>
+
+  <!-- Tijeras pequeñas -->
+  <g transform="translate(345 80)" stroke="#d4af37" stroke-width="4" fill="none" stroke-linecap="round">
+    <circle cx="-10" cy="16" r="7"/>
+    <circle cx="10" cy="16" r="7"/>
+    <line x1="-5" y1="11" x2="12" y2="-18"/>
+    <line x1="5" y1="11" x2="-12" y2="-18"/>
+  </g>
+</svg>
