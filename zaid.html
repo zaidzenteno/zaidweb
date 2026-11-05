@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zaid Zenteno Flores</title>
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fondo: #0b0f1e;
+    --texto: #e8ecff;
+    --suave: #9aa3c7;
+    --acento: #ffb627;
+    --acento2: #4ee1c1;
+    --tarjeta: rgba(255, 255, 255, 0.06);
+    --borde: rgba(255, 255, 255, 0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--fondo); color: var(--texto); font-family: 'Rajdhani', sans-serif; font-size: 18px; overflow-x: hidden; }
+  /* Títulos con letra ancha estilo "tarjeta de IA" */
+  h1, h2, nav .logo, .boton, .hola, .etiqueta { font-family: 'Michroma', sans-serif; text-transform: uppercase; letter-spacing: 4px; }
+  /* Dorado brillante como los nombres de las IAs */
+  h1, h2 {
+    background: linear-gradient(180deg, #fff6d5 0%, #ffd25e 40%, #f39a1e 70%, #c45f0a 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 10px rgba(255, 170, 40, 0.55)) drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.6));
+  }
+  .etiqueta { font-size: 11px; color: #ffd25e; opacity: 0.8; display: flex; align-items: center; gap: 10px; }
+  .etiqueta::before { content: ''; width: 40px; height: 1px; background: #ffd25e; }
+  .lista-ia { list-style: none; margin-top: 6px; border-left: 2px solid rgba(255, 210, 94, 0.6); padding-left: 14px; }
+  .lista-ia li { font-size: clamp(16px, 2.2vw, 21px); color: #f3e9d2; font-weight: 600; letter-spacing: 1px; margin: 4px 0; }
+  .lista-ia li::before { content: '◆ '; color: #ffb627; }
+
+  /* El 3D va de fondo, detrás de todo */
+  #fondo3d { position: fixed; inset: 0; z-index: 0; }
+  main { position: relative; z-index: 1; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: rgba(11, 15, 30, 0.6); backdrop-filter: blur(8px); }
+  nav .logo { font-weight: 800; font-size: 22px; color: var(--acento); text-decoration: none; }
+  nav .links a { color: var(--texto); text-decoration: none; margin-left: 18px; font-size: 15px; }
+  nav .links a:hover { color: var(--acento2); }
+
+  section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 100px 16px 60px; max-width: 1000px; margin: 0 auto; }
+
+  .hola { color: var(--acento2); font-size: 18px; letter-spacing: 2px; }
+  h1 { font-size: clamp(22px, 5.5vw, 56px); line-height: 1.05; font-weight: 800; margin: 10px 0 18px; }
+  .lema { font-size: clamp(16px, 2.4vw, 22px); color: var(--suave); max-width: 560px; }
+  .boton { display: inline-block; margin-top: 30px; padding: 14px 30px; border-radius: 40px; background: var(--acento); color: #1a1200; font-weight: 600; text-decoration: none; transition: transform .2s; width: fit-content; }
+  .boton:hover { transform: translateY(-3px); }
+
+  h2 { font-size: clamp(30px, 5vw, 46px); margin-bottom: 26px; }
+  h2::after { content: ''; display: block; width: 60px; height: 4px; background: #ffb627; border-radius: 2px; margin-top: 8px; }
+
+  .tarjeta { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: 18px; padding: 24px; backdrop-filter: blur(6px); }
+  .sobre p { font-size: 18px; color: var(--suave); margin-bottom: 14px; }
+  .sobre strong { color: var(--texto); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .chip { padding: 8px 16px; border-radius: 30px; border: 1px solid var(--acento2); color: var(--acento2); font-size: 15px; }
+
+  footer { position: relative; z-index: 1; text-align: center; padding: 30px 16px; color: var(--suave); font-size: 14px; }
+
+  @media (max-width: 600px) {
+    nav .links a { margin-left: 12px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<canvas id="fondo3d"></canvas>
+
+<nav>
+  <a class="logo" href="#inicio">ZZF</a>
+  <div class="links">
+    <a href="#sobre">Sobre mí</a>
+  </div>
+</nav>
+
+<main>
+  <section id="inicio">
+    <p class="etiqueta">Presentando</p>
+    <h1>Zaid<br>Zenteno Flores</h1>
+    <ul class="lista-ia">
+      <li>Programador en entrenamiento</li>
+      <li>Aprendiendo desde cero</li>
+      <li>Fan del 3D</li>
+    </ul>
+    <a class="boton" href="#sobre">Conóceme ↓</a>
+  </section>
+
+  <section id="sobre" class="sobre">
+    <h2>Sobre mí</h2>
+    <div class="tarjeta">
+      <p>Me llamo <strong>Zaid Zenteno Flores</strong>. Empecé hace poco en el mundo de la programación y cada día aprendo algo nuevo.</p>
+      <p>Me gustaría aprender a crear páginas web, efectos en 3D y videojuegos.</p>
+      <p><strong>Lo que estoy aprendiendo:</strong></p>
+      <div class="chips">
+        <span class="chip">HTML</span>
+        <span class="chip">CSS</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">Three.js (3D)</span>
+        <span class="chip">Git y GitHub</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Hecho por Zaid Zenteno Flores · 2026</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ===== Fondo 3D con un dragón (todo hecho con código, sin descargar modelos) =====
+const canvas = document.getElementById('fondo3d');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputEncoding = THREE.sRGBEncoding;           // colores más naturales
+renderer.toneMapping = THREE.ACESFilmicToneMapping;     // luces tipo cine
+renderer.toneMappingExposure = 1.15;
+
+const escena = new THREE.Scene();
+const camara = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 100);
+camara.position.z = 8;
+
+// ===== Luces: luna fría arriba, fuego cálido abajo y contraluz =====
+escena.add(new THREE.HemisphereLight(0x8fa6ff, 0x3a1206, 0.6));
+const luna = new THREE.DirectionalLight(0xdfe6ff, 1.2);
+luna.position.set(-3, 6, 5);
+escena.add(luna);
+const contraluz = new THREE.DirectionalLight(0xff9a50, 1.6);
+contraluz.position.set(2, 3, -6);
+escena.add(contraluz);
+const luzAbajo = new THREE.PointLight(0xff4a14, 1.3, 30);
+luzAbajo.position.set(3, -5, 3);
+escena.add(luzAbajo);
+
+// ===== Herramientas =====
+const V = (x = 0, y = 0, z = 0) => new THREE.Vector3(x, y, z);
+const ARRIBA = V(0, 1, 0);
+
+// Textura de escamas dibujada con código
+function texturaEscamas(rep) {
+  const c = document.createElement('canvas');
+  c.width = c.height = 128;
+  const g = c.getContext('2d');
+  g.fillStyle = '#8a8a8a';
+  g.fillRect(0, 0, 128, 128);
+  const n = 8, tam = 128 / n;
+  for (let f = -1; f <= n; f++) {
+    for (let k = -1; k <= n; k++) {
+      const x = k * tam + (f % 2 ? tam / 2 : 0), y = f * tam;
+      const gr = g.createRadialGradient(x, y - tam * 0.2, 1, x, y, tam * 0.75);
+      gr.addColorStop(0, '#ffffff');
+      gr.addColorStop(0.65, '#bcbcbc');
+      gr.addColorStop(1, '#3c3c3c');
+      g.fillStyle = gr;
+      g.beginPath();
+      g.arc(x, y, tam * 0.72, 0, Math.PI * 2);
+      g.fill();
+    }
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(rep, rep);
+  tex.encoding = THREE.sRGBEncoding;
+  return tex;
+}
+
+// Tubo que se va afinando (para cuernos)
+function tuboAhusado(puntos, r0, r1, seg, lados) {
+  const curva = new THREE.CatmullRomCurve3(puntos);
+  const geo = new THREE.TubeGeometry(curva, seg, 1, lados, false);
+  const p = geo.attributes.position, c = V(), q = V();
+  for (let i = 0; i <= seg; i++) {
+    curva.getPointAt(i / seg, c);
+    const r = r0 + (r1 - r0) * i / seg;
+    for (let j = 0; j <= lados; j++) {
+      const k = i * (lados + 1) + j;
+      q.fromBufferAttribute(p, k).sub(c).multiplyScalar(r).add(c);
+      p.setXYZ(k, q.x, q.y, q.z);
+    }
+  }
+  return geo;
+}
+
+// Hueso que va de a hasta b (se puede mover cada cuadro)
+function geoHueso(r0, r1) {
+  const g = new THREE.CylinderGeometry(r1, r0, 1, 8);
+  g.translate(0, 0.5, 0);
+  return g;
+}
+function ponerHueso(m, a, b) {
+  const d = _tmp.subVectors(b, a);
+  const largo = d.length();
+  m.position.copy(a);
+  m.scale.set(1, largo, 1);
+  m.quaternion.setFromUnitVectors(ARRIBA, d.divideScalar(largo));
+}
+const _tmp = V();
+
+// ===== Materiales =====
+const texCuerpo = texturaEscamas(1);
+const texCabeza = texturaEscamas(3);
+const matCuerpo = new THREE.MeshStandardMaterial({ vertexColors: true, map: texCuerpo, bumpMap: texCuerpo, bumpScale: 0.03, roughness: 0.5, metalness: 0.15 });
+const matPiel = new THREE.MeshStandardMaterial({ color: 0x150d0a, map: texCabeza, bumpMap: texCabeza, bumpScale: 0.02, roughness: 0.5, metalness: 0.15 });
+const matCuerno = new THREE.MeshStandardMaterial({ color: 0x0a0706, roughness: 0.35, metalness: 0.2 });
+const matDiente = new THREE.MeshStandardMaterial({ color: 0xb8a98a, roughness: 0.4 });
+const matOjo = new THREE.MeshBasicMaterial({ color: 0xffc23a });
+const matPupila = new THREE.MeshBasicMaterial({ color: 0x000000 });
+const matAla = new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 0.7, metalness: 0.05, emissive: 0x160302 });
+
+const dragon = new THREE.Group();
+
+// ===== CUERPO: un solo tubo suave desde la punta de la cola hasta la cabeza =====
+// s = 0 es la punta de la cola, s = 1 es donde empieza la cabeza
+function radio(s) {
+  if (s < 0.42) return 0.03 + 0.42 * Math.pow(s / 0.42, 1.5);                 // cola
+  if (s < 0.74) return 0.45 + 0.09 * Math.sin(Math.PI * (s - 0.42) / 0.32);   // pecho
+  return 0.45 - 0.25 * Math.pow((s - 0.74) / 0.26, 0.7);                       // cuello
+}
+function columna(s, t, out) {
+  let x = 0, y = 0;
+  const z = -4.4 + s * 5.9;
+  if (s < 0.44) {            // la cola ondula
+    const k = (0.44 - s) / 0.44;
+    y = -0.45 * k + 0.35 * k * k * k + Math.sin(t * 1.3 - s * 7) * 0.12 * k;
+    x = Math.sin(t * 1.7 - s * 9) * 0.6 * Math.pow(k, 1.6);
+  } else if (s > 0.72) {     // el cuello sube y se mueve un poco
+    const k = (s - 0.72) / 0.28;
+    y = 1.05 * Math.pow(k, 1.5) + Math.sin(t * 1.1) * 0.06 * k;
+    x = Math.sin(t * 0.7 - s * 4) * 0.15 * k;
+  }
+  return out.set(x, y, z);
+}
+const _c = V(), _a = V(), _b = V(), _T = V(), _B = V(), _N = V();
+function marco(s, t) { // centro (_c) y direcciones: adelante (_T), costado (_B), arriba (_N)
+  columna(s, t, _c);
+  columna(Math.min(1, s + 0.01), t, _a);
+  columna(Math.max(0, s - 0.01), t, _b);
+  _T.subVectors(_a, _b).normalize();
+  _B.crossVectors(ARRIBA, _T).normalize();
+  _N.crossVectors(_T, _B);
+}
+
+const ANILLOS = 56, LADOS = 14;
+const posCuerpo = new Float32Array(ANILLOS * (LADOS + 1) * 3);
+const colCuerpo = new Float32Array(ANILLOS * (LADOS + 1) * 3);
+const uvCuerpo = new Float32Array(ANILLOS * (LADOS + 1) * 2);
+const indices = [];
+const cLomo = new THREE.Color(0x0b0706), cPanza = new THREE.Color(0x5a2c12), cTmp = new THREE.Color();
+for (let i = 0; i < ANILLOS; i++) {
+  for (let j = 0; j <= LADOS; j++) {
+    const v = i * (LADOS + 1) + j, ang = j / LADOS * Math.PI * 2;
+    const panza = THREE.MathUtils.smoothstep(-Math.sin(ang), 0.25, 0.85);
+    cTmp.copy(cLomo).lerp(cPanza, panza).toArray(colCuerpo, v * 3);
+    uvCuerpo[v * 2] = j / LADOS * 4;
+    uvCuerpo[v * 2 + 1] = i / (ANILLOS - 1) * 18;
+    if (i < ANILLOS - 1 && j < LADOS) {
+      const a = v, b = v + LADOS + 1;
+      indices.push(a, a + 1, b, a + 1, b + 1, b);
+    }
+  }
+}
+const geoCuerpo = new THREE.BufferGeometry();
+geoCuerpo.setIndex(indices);
+geoCuerpo.setAttribute('position', new THREE.BufferAttribute(posCuerpo, 3));
+geoCuerpo.setAttribute('color', new THREE.BufferAttribute(colCuerpo, 3));
+geoCuerpo.setAttribute('uv', new THREE.BufferAttribute(uvCuerpo, 2));
+const cuerpo = new THREE.Mesh(geoCuerpo, matCuerpo);
+cuerpo.frustumCulled = false;
+dragon.add(cuerpo);
+
+function actualizarCuerpo(t) {
+  for (let i = 0; i < ANILLOS; i++) {
+    const s = i / (ANILLOS - 1);
+    marco(s, t);
+    const r = radio(s);
+    for (let j = 0; j <= LADOS; j++) {
+      const ang = j / LADOS * Math.PI * 2, cs = Math.cos(ang), sn = Math.sin(ang);
+      const rx = r * 0.88, ry = r * (sn < 0 ? 0.95 : 1.08);
+      const v = (i * (LADOS + 1) + j) * 3;
+      posCuerpo[v]     = _c.x + _B.x * cs * rx + _N.x * sn * ry;
+      posCuerpo[v + 1] = _c.y + _B.y * cs * rx + _N.y * sn * ry;
+      posCuerpo[v + 2] = _c.z + _B.z * cs * rx + _N.z * sn * ry;
+    }
+  }
+  geoCuerpo.attributes.position.needsUpdate = true;
+  geoCuerpo.computeVertexNormals();
+  // unir la costura para que no se vea una línea
+  const n = geoCuerpo.attributes.normal;
+  for (let i = 0; i < ANILLOS; i++) {
+    const a = i * (LADOS + 1), b = a + LADOS;
+    _a.fromBufferAttribute(n, a).add(_b.fromBufferAttribute(n, b)).normalize();
+    n.setXYZ(a, _a.x, _a.y, _a.z);
+    n.setXYZ(b, _a.x, _a.y, _a.z);
+  }
+}
+
+// Púas a lo largo de la espalda y la cola
+const geoPua = new THREE.ConeGeometry(0.055, 0.26, 5);
+geoPua.translate(0, 0.13, 0);
+const puas = [];
+for (let k = 0; k < 26; k++) {
+  const m = new THREE.Mesh(geoPua, matCuerno);
+  dragon.add(m);
+  puas.push({ m, s: 0.05 + k / 25 * 0.9 });
+}
+function actualizarPuas(t) {
+  for (const p of puas) {
+    marco(p.s, t);
+    const r = radio(p.s);
+    p.m.position.copy(_c).addScaledVector(_N, r * 1.02);
+    _a.copy(_N).addScaledVector(_T, -0.8).normalize();
+    p.m.quaternion.setFromUnitVectors(ARRIBA, _a);
+    p.m.scale.setScalar(0.5 + r * 1.6);
+  }
+}
+// Punta de la cola en forma de flecha
+const puntaCola = new THREE.Mesh(new THREE.OctahedronGeometry(0.16, 0), matCuerno);
+puntaCola.scale.set(0.25, 0.9, 1.7);
+dragon.add(puntaCola);
+
+// ===== CABEZA =====
+const cabeza = new THREE.Group();
+function pieza(geo, mat, x, y, z, padre = cabeza) {
+  const m = new THREE.Mesh(geo, mat);
+  m.position.set(x, y, z);
+  padre.add(m);
+  return m;
+}
+pieza(new THREE.SphereGeometry(0.27, 16, 12), matPiel, 0, 0.05, 0.1).scale.set(0.95, 0.78, 1.2);   // cráneo
+const geoHocico = new THREE.CylinderGeometry(0.09, 0.19, 0.6, 14);
+geoHocico.rotateX(Math.PI / 2);
+pieza(geoHocico, matPiel, 0, 0, 0.48).scale.set(1, 0.6, 1);                                        // hocico
+pieza(new THREE.SphereGeometry(0.09, 12, 8), matPiel, 0, 0, 0.78).scale.set(1, 0.6, 0.9);          // nariz
+
+const mandibula = new THREE.Group();
+mandibula.position.set(0, -0.09, 0.12);
+cabeza.add(mandibula);
+const geoQuijada = new THREE.CylinderGeometry(0.07, 0.15, 0.62, 12);
+geoQuijada.rotateX(Math.PI / 2);
+pieza(geoQuijada, matPiel, 0, -0.02, 0.33, mandibula).scale.set(1, 0.4, 1);
+pieza(new THREE.SphereGeometry(0.07, 10, 8), matPiel, 0, -0.02, 0.64, mandibula).scale.set(1, 0.45, 1);
+
+const geoDiente = new THREE.ConeGeometry(0.016, 0.075, 4);
+const geoDienteAbajo = geoDiente.clone();
+geoDiente.rotateX(Math.PI); // los de arriba apuntan hacia abajo
+for (const l of [-1, 1]) {
+  for (let k = 0; k < 6; k++) {
+    const z = 0.72 - k * 0.075;
+    pieza(geoDiente, matDiente, l * (0.072 + (0.72 - z) * 0.17), -0.05, z);
+  }
+  for (let k = 0; k < 5; k++) {
+    const z = 0.6 - k * 0.08;
+    pieza(geoDienteAbajo, matDiente, l * (0.058 + (0.6 - z) * 0.15), 0.03, z, mandibula);
+  }
+  // ojos con pupila de reptil
+  pieza(new THREE.SphereGeometry(0.042, 12, 8), matOjo, l * 0.165, 0.09, 0.28);
+  pieza(new THREE.BoxGeometry(0.01, 0.06, 0.02), matPupila, l * 0.205, 0.09, 0.29);
+  // cejas
+  const ceja = pieza(new THREE.ConeGeometry(0.05, 0.3, 5), matPiel, l * 0.14, 0.17, 0.2);
+  ceja.rotation.set(-1.35, 0, l * -0.25);
+  // cuernos curvos grandes
+  cabeza.add(new THREE.Mesh(tuboAhusado([V(0.11 * l, 0.14, 0), V(0.19 * l, 0.3, -0.28), V(0.23 * l, 0.33, -0.58), V(0.2 * l, 0.22, -0.86)], 0.065, 0.006, 12, 8), matCuerno));
+  // cuernos chicos en las mejillas
+  cabeza.add(new THREE.Mesh(tuboAhusado([V(0.2 * l, -0.02, 0.05), V(0.3 * l, -0.03, -0.18), V(0.36 * l, -0.1, -0.38)], 0.04, 0.004, 8, 6), matCuerno));
+}
+const luzBoca = new THREE.PointLight(0xff6a00, 0, 6);
+luzBoca.position.set(0, -0.05, 0.95);
+cabeza.add(luzBoca);
+dragon.add(cabeza);
+const inclinarCabeza = new THREE.Quaternion().setFromAxisAngle(V(1, 0, 0), 0.7);
+const _m4 = new THREE.Matrix4();
+
+// ===== PATAS (traseras y delanteras) =====
+function huesoFijo(a, b, r0, r1, mat = matPiel) {
+  const m = new THREE.Mesh(geoHueso(r0, r1), mat);
+  ponerHueso(m, a, b);
+  dragon.add(m);
+}
+const geoGarra = new THREE.ConeGeometry(0.025, 0.14, 5);
+geoGarra.translate(0, 0.07, 0);
+function garras(pos, dir) {
+  for (const dx of [-0.05, 0, 0.05]) {
+    const g = new THREE.Mesh(geoGarra, matCuerno);
+    g.position.set(pos.x + dx, pos.y, pos.z);
+    g.quaternion.setFromUnitVectors(ARRIBA, dir.clone().normalize());
+    dragon.add(g);
+  }
+}
+for (const l of [-1, 1]) {
+  // traseras (recogidas hacia atrás, como al volar)
+  const cadera = V(0.3 * l, -0.18, -1.75), rodilla = V(0.37 * l, -0.45, -1.6), tobillo = V(0.34 * l, -0.52, -2.15), pie = V(0.33 * l, -0.52, -2.4);
+  const muslo = new THREE.Mesh(new THREE.SphereGeometry(0.2, 12, 8), matPiel);
+  muslo.position.copy(cadera);
+  muslo.scale.set(0.75, 1, 1.35);
+  dragon.add(muslo);
+  huesoFijo(cadera, rodilla, 0.13, 0.1);
+  huesoFijo(rodilla, tobillo, 0.09, 0.06);
+  huesoFijo(tobillo, pie, 0.06, 0.035);
+  garras(pie, V(0, -0.3, -1));
+  // delanteras (pequeñas, pegadas al pecho)
+  const hombro = V(0.25 * l, -0.25, -0.7), codo = V(0.32 * l, -0.5, -0.55), mano = V(0.28 * l, -0.56, -0.28);
+  huesoFijo(hombro, codo, 0.08, 0.06);
+  huesoFijo(codo, mano, 0.06, 0.035);
+  garras(mano, V(0, -0.4, 1));
+}
+
+// ===== ALAS de murciélago que se doblan =====
+const K = 4;                 // divisiones de cada "rayo" de la membrana
+const RAYOS = 10;            // hombro, cuerpo, dedos y bordes en onda
+const posAla = new Float32Array((RAYOS - 1) * K * 2 * 9);
+const colAla = new Float32Array((RAYOS - 1) * K * 2 * 9);
+const cAlaDentro = new THREE.Color(0x100302), cAlaBorde = new THREE.Color(0x5a1208);
+{
+  let v = 0;
+  const pintar = k => { cTmp.copy(cAlaDentro).lerp(cAlaBorde, k / K).toArray(colAla, v); v += 3; };
+  for (let j = 0; j < RAYOS - 1; j++) for (let k = 0; k < K; k++) {
+    pintar(k); pintar(k); pintar(k + 1);
+    pintar(k); pintar(k + 1); pintar(k + 1);
+  }
+}
+const geoAla = new THREE.BufferGeometry();
+geoAla.setAttribute('position', new THREE.BufferAttribute(posAla, 3));
+geoAla.setAttribute('color', new THREE.BufferAttribute(colAla, 3));
+
+// Puntos del ala en reposo (lado derecho, medidos desde el hombro)
+const e0 = V(1.15, 0.3, -0.15);   // codo
+const w0 = V(2.25, 0.5, -0.4);    // muñeca
+const dedos0 = [V(1.6, -0.25, -0.35), V(1.15, -0.9, -0.85), V(0.45, -1.15, -1.2), V(-0.35, -1.0, -1.35)];
+const b0 = V(-0.15, -0.2, -1.0);  // donde el ala se une al cuerpo
+const s0 = V(0, 0, 0);
+const pose = { e: V(), w: V(), d: [V(), V(), V(), V()] };
+const qA = new THREE.Quaternion(), qB = new THREE.Quaternion(), qC = new THREE.Quaternion(), qT = new THREE.Quaternion();
+const EJE_Z = V(0, 0, 1), EJE_Y = V(0, 1, 0);
+const rejilla = Array.from({ length: RAYOS }, () => Array.from({ length: K + 1 }, () => V()));
+const finRayo = Array.from({ length: RAYOS }, () => V());
+const _n = V(), _p = V();
+
+function poseAla(p) {
+  const a1 = 0.12 + 0.62 * Math.sin(p);          // hombro
+  const a2 = 0.38 * Math.sin(p - 0.7);           // codo (va un poco atrasado)
+  const a3 = 0.3 * Math.sin(p - 1.3);            // muñeca (más atrasada)
+  const plegar = 0.4 * Math.max(0, Math.cos(p)); // al subir, la mano se dobla hacia atrás
+  qA.setFromAxisAngle(EJE_Z, a1);
+  qB.setFromAxisAngle(EJE_Z, a2).premultiply(qA);
+  qT.setFromAxisAngle(EJE_Y, plegar);
+  qC.setFromAxisAngle(EJE_Z, a3).premultiply(qT).premultiply(qB);
+  pose.e.copy(e0).applyQuaternion(qA);
+  pose.w.copy(w0).sub(e0).applyQuaternion(qB).add(pose.e);
+  for (let i = 0; i < 4; i++) pose.d[i].copy(dedos0[i]).applyQuaternion(qC).add(pose.w);
+
+  // Membrana: rayos que salen de la muñeca
+  const d = pose.d, w = pose.w;
+  const onda = (a, b, out) => out.copy(a).lerp(b, 0.5).lerp(w, 0.22); // borde con forma de onda
+  finRayo[0].copy(s0); finRayo[1].copy(b0);
+  onda(b0, d[3], finRayo[2]); finRayo[3].copy(d[3]);
+  onda(d[3], d[2], finRayo[4]); finRayo[5].copy(d[2]);
+  onda(d[2], d[1], finRayo[6]); finRayo[7].copy(d[1]);
+  onda(d[1], d[0], finRayo[8]); finRayo[9].copy(d[0]);
+  // la tela cuelga un poco entre los dedos
+  _n.subVectors(d[0], w).cross(_p.subVectors(d[3], w)).normalize();
+  for (let j = 0; j < RAYOS; j++) {
+    const esHueso = j === 3 || j === 5 || j === 7 || j === 9;
+    const caida = esHueso ? 0 : (j % 2 === 0 && j > 1 ? 0.16 : 0.06);
+    for (let k = 0; k <= K; k++) {
+      rejilla[j][k].copy(w).lerp(finRayo[j], k / K).addScaledVector(_n, -Math.sin(Math.PI * k / K) * caida);
+    }
+  }
+  let v = 0;
+  const poner = q => { posAla[v++] = q.x; posAla[v++] = q.y; posAla[v++] = q.z; };
+  for (let j = 0; j < RAYOS - 1; j++) for (let k = 0; k < K; k++) {
+    poner(rejilla[j][k]); poner(rejilla[j + 1][k]); poner(rejilla[j + 1][k + 1]);
+    poner(rejilla[j][k]); poner(rejilla[j + 1][k + 1]); poner(rejilla[j][k + 1]);
+  }
+  geoAla.attributes.position.needsUpdate = true;
+  geoAla.computeVertexNormals();
+}
+
+const geoHumero = geoHueso(0.08, 0.06), geoAntebrazo = geoHueso(0.06, 0.045), geoDedo = geoHueso(0.035, 0.01);
+const geoGarraAla = new THREE.ConeGeometry(0.035, 0.2, 5);
+geoGarraAla.translate(0, 0.1, 0);
+function crearAla(lado) {
+  const ala = new THREE.Group();
+  const membrana = new THREE.Mesh(geoAla, matAla);
+  membrana.frustumCulled = false;
+  ala.add(membrana);
+  const huesos = [geoHumero, geoAntebrazo, geoDedo, geoDedo, geoDedo, geoDedo].map(g => {
+    const m = new THREE.Mesh(g, matCuerno);
+    m.frustumCulled = false;
+    ala.add(m);
+    return m;
+  });
+  const garra = new THREE.Mesh(geoGarraAla, matCuerno);
+  ala.add(garra);
+  ala.userData = { huesos, garra };
+  ala.position.set(0.28 * lado, 0.3, -0.5);
+  ala.scale.x = lado; // el ala izquierda es un espejo de la derecha
+  dragon.add(ala);
+  return ala;
+}
+const alas = [crearAla(1), crearAla(-1)];
+function actualizarAlas(p) {
+  poseAla(p);
+  for (const ala of alas) {
+    const h = ala.userData.huesos;
+    ponerHueso(h[0], s0, pose.e);
+    ponerHueso(h[1], pose.e, pose.w);
+    for (let i = 0; i < 4; i++) ponerHueso(h[2 + i], pose.w, pose.d[i]);
+    ala.userData.garra.position.copy(pose.w);
+    ala.userData.garra.quaternion.setFromUnitVectors(ARRIBA, _a.set(0, 0.5, 1).applyQuaternion(qB).normalize());
+  }
+}
+
+const grupo = new THREE.Group();
+dragon.position.z = 1; // centrar el dragón
+grupo.add(dragon);
+escena.add(grupo);
+
+// ===== FUEGO que lanza por la boca =====
+function texturaFuego() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 64;
+  const g = c.getContext('2d');
+  const gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, 'rgba(255,255,255,1)');
+  gr.addColorStop(0.35, 'rgba(255,255,255,0.7)');
+  gr.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = gr;
+  g.fillRect(0, 0, 64, 64);
+  return new THREE.CanvasTexture(c);
+}
+const NF = 80, VIDA_FUEGO = 0.6;
+const posF = new Float32Array(NF * 3), colF = new Float32Array(NF * 3);
+const velF = Array.from({ length: NF }, () => V()), vidaF = new Float32Array(NF);
+for (let i = 0; i < NF; i++) posF[i * 3 + 1] = -999;
+const geoF = new THREE.BufferGeometry();
+geoF.setAttribute('position', new THREE.BufferAttribute(posF, 3));
+geoF.setAttribute('color', new THREE.BufferAttribute(colF, 3));
+const matF = new THREE.PointsMaterial({ size: 0.8, map: texturaFuego(), vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
+const fuego = new THREE.Points(geoF, matF);
+fuego.frustumCulled = false;
+escena.add(fuego);
+const qMundo = new THREE.Quaternion();
+const cAmarillo = new THREE.Color(1, 0.85, 0.45), cNaranja = new THREE.Color(1, 0.4, 0.06), cRojo = new THREE.Color(0.35, 0.04, 0);
+
+function actualizarFuego(t, dt, escala) {
+  const ciclo = t % 8;
+  const soplando = ciclo > 5 && ciclo < 6.8;
+  const abrir = THREE.MathUtils.smoothstep(ciclo, 4.6, 5.0) * (1 - THREE.MathUtils.smoothstep(ciclo, 6.8, 7.3));
+  mandibula.rotation.x = 0.06 + abrir * 0.45;
+  luzBoca.intensity = abrir * (soplando ? 4 : 1) * (0.8 + Math.random() * 0.2);
+  matF.size = 0.9 * escala;
+
+  if (soplando) {
+    grupo.updateMatrixWorld(true);
+    _a.set(0, -0.05, 0.85);
+    cabeza.localToWorld(_a);
+    cabeza.getWorldQuaternion(qMundo);
+    let nuevos = 4;
+    for (let i = 0; i < NF && nuevos > 0; i++) {
+      if (vidaF[i] > 0) continue;
+      vidaF[i] = VIDA_FUEGO * (0.7 + Math.random() * 0.3);
+      posF[i * 3] = _a.x; posF[i * 3 + 1] = _a.y; posF[i * 3 + 2] = _a.z;
+      velF[i].set((Math.random() - 0.5) * 0.35, -0.1 + (Math.random() - 0.5) * 0.35, 1)
+        .applyQuaternion(qMundo).normalize().multiplyScalar(7 * escala * (0.8 + Math.random() * 0.4));
+      nuevos--;
+    }
+  }
+  for (let i = 0; i < NF; i++) {
+    if (vidaF[i] <= 0) { posF[i * 3 + 1] = -999; continue; } // apagada: se esconde lejos
+    vidaF[i] -= dt;
+    const edad = 1 - Math.max(0, vidaF[i]) / VIDA_FUEGO; // 0 = recién nace, 1 = se apaga
+    velF[i].multiplyScalar(0.96);
+    velF[i].y += 1.5 * dt;
+    posF[i * 3] += velF[i].x * dt; posF[i * 3 + 1] += velF[i].y * dt; posF[i * 3 + 2] += velF[i].z * dt;
+    if (edad < 0.35) cTmp.copy(cAmarillo).lerp(cNaranja, edad / 0.35);
+    else cTmp.copy(cNaranja).lerp(cRojo, (edad - 0.35) / 0.65);
+    cTmp.multiplyScalar(1 - edad * 0.8).toArray(colF, i * 3);
+  }
+  geoF.attributes.position.needsUpdate = true;
+  geoF.attributes.color.needsUpdate = true;
+}
+
+// ===== Brasas que suben =====
+const brasas = [];
+const geoBrasa = new THREE.TetrahedronGeometry(0.06);
+const coloresBrasa = [0xff6a00, 0xffb627, 0xff3b1f].map(c => new THREE.MeshBasicMaterial({ color: c }));
+for (let i = 0; i < 40; i++) {
+  const b = new THREE.Mesh(geoBrasa, coloresBrasa[i % 3]);
+  b.position.set((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 12, (Math.random() - 0.5) * 6 - 1);
+  b.userData = { vel: 0.4 + Math.random() * 0.8, fase: Math.random() * 6 };
+  escena.add(b); brasas.push(b);
+}
+
+// ===== Estrellas =====
+const nEstrellas = 600;
+const pos = new Float32Array(nEstrellas * 3);
+for (let i = 0; i < nEstrellas * 3; i++) pos[i] = (Math.random() - 0.5) * 60;
+const geoEstrellas = new THREE.BufferGeometry();
+geoEstrellas.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+const estrellas = new THREE.Points(geoEstrellas, new THREE.PointsMaterial({ color: 0xffffff, size: 0.08 }));
+escena.add(estrellas);
+
+// El mouse mueve un poco la escena
+let mx = 0, my = 0;
+addEventListener('mousemove', e => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; });
+
+addEventListener('resize', () => {
+  camara.aspect = innerWidth / innerHeight; camara.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+
+const reloj = new THREE.Clock();
+let ultimo = 0;
+function animar() {
+  requestAnimationFrame(animar);
+  if (document.hidden) return; // no gasta PC si la pestaña está oculta
+  const t = reloj.getElapsedTime();
+  if (!innerHeight) return; // ventana sin tamaño todavía
+  const scroll = scrollY / innerHeight; // 0 arriba, 1 en "Sobre mí"
+  const dt = Math.min(t - ultimo, 0.05);
+  ultimo = t;
+
+  // Dónde va el dragón: en pantallas grandes a la derecha, en celular arriba
+  const grande = innerWidth > 700;
+  const escala = grande ? 0.72 : 0.4;
+  grupo.position.set(grande ? 4.0 : 0, grande ? 1.7 : 2.3, 0);
+  grupo.scale.setScalar(escala);
+  // de lado, mirando hacia tu nombre, visto un poco desde arriba
+  grupo.rotation.set(0.5, -0.95 + Math.sin(t * 0.4) * 0.12 + scroll * 0.5, Math.sin(t * 0.6) * 0.06);
+
+  // Aleteo: el cuerpo sube cuando las alas bajan
+  const p = t * 2.4;
+  dragon.position.y = -Math.sin(p) * 0.12;
+  actualizarAlas(p);
+  actualizarCuerpo(t);
+  actualizarPuas(t);
+
+  // La cabeza sigue al final del cuello
+  marco(1, t);
+  cabeza.position.copy(_c);
+  _m4.makeBasis(_B, _N, _T);
+  cabeza.quaternion.setFromRotationMatrix(_m4).multiply(inclinarCabeza);
+
+  // La punta de la cola sigue al final de la cola
+  marco(0, t);
+  puntaCola.position.copy(_c).addScaledVector(_T, -0.12);
+  _m4.makeBasis(_B, _N, _T);
+  puntaCola.quaternion.setFromRotationMatrix(_m4);
+
+  actualizarFuego(t, dt, escala);
+
+  for (const b of brasas) {
+    b.position.y += dt * b.userData.vel;
+    b.position.x += Math.sin(t + b.userData.fase) * dt * 0.3;
+    b.rotation.x += dt * 2;
+    if (b.position.y > 6) b.position.y = -6;
+  }
+  estrellas.rotation.y = t * 0.02;
+
+  camara.position.x += (mx * 1.5 - camara.position.x) * 0.05;
+  camara.position.y += (-my * 1.5 - scroll * 0.5 - camara.position.y) * 0.05;
+  camara.lookAt(0, -scroll * 0.5, 0);
+
+  renderer.render(escena, camara);
+}
+animar();
+</script>
+</body>
+</html>
